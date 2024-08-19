@@ -4,7 +4,4 @@ export default class ErrorMessageComponent extends BaseComponent {
   constructor() {
     super(".error-message-container");
   }
-
-
-
 }

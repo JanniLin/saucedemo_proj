@@ -5,4 +5,3 @@ export default class UserNameComponent extends BaseComponent {
     super("input#user-name");
   }
 }
-

@@ -5,4 +5,3 @@ export default class PasswordComponent extends BaseComponent {
     super("input#password");
   }
 }
-

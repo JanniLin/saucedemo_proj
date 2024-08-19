@@ -5,4 +5,3 @@ export default class LoginComponent extends BaseComponent {
     super("input#login-button");
   }
 }
-
