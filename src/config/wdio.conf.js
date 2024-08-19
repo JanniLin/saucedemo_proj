@@ -43,7 +43,7 @@ export const config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 2,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -51,14 +51,14 @@ export const config = {
   //
   capabilities: [
     {
-      maxInstances: 5,
+      maxInstances: 1,
       browserName: "chrome",
       "goog:chromeOptions": {
         args: ["--headless", "--disable-gpu"],
       },
     },
     {
-      maxInstances: 5,
+      maxInstances: 1,
       browserName: "MicrosoftEdge",
       "ms:edgeOptions": {
         args: ["--headless", "--disable-gpu"],
@@ -200,6 +200,17 @@ export const config = {
    */
   // before: function (capabilities, specs) {
   // },
+  before: () => {
+  browser.execute(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  });
+},
   /**
    * Runs before a WebdriverIO command gets executed.
    * @param {string} commandName hook command name

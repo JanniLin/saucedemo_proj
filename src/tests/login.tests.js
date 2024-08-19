@@ -1,60 +1,59 @@
-import {Key} from "webdriverio";
+import { Key } from "webdriverio";
 import pages from "../po/pages/index.js";
+import UserNameComponent from "../po/components/login_form/userName.component.js";
+import PasswordComponent from "../po/components/login_form/password.component.js";
+import LoginComponent from "../po/components/login_form/login.component.js";
+import ErrorMessageComponent from "../po/components/login_form/errorMessage.component.js";
+import HeaderComponent from "../po/components/inventory/header.component.js";
+const username = new UserNameComponent()
+const password = new PasswordComponent()
+const login = new LoginComponent()
+const error = new ErrorMessageComponent()
+const header = new HeaderComponent()
 
 describe("Login suite", () => {
   beforeEach(async () => {
-    await pages('login').open()
-    //await browser.url("https://www.saucedemo.com");
+    await pages("login").open();
   });
   it("1 Login with empty credentials", async () => {
-    const $nameInput = await $("input#user-name");
-    const $passInput = await $("input#password");
     //Type any credentials into "Username" and "Password" fields.
-    await $nameInput.setValue("some text");
-    await $passInput.setValue("some pass");
+    await username.rootEl.setValue("some text");
+    await password.rootEl.setValue("some pass");
     //Clear the inputs.
-    await $nameInput.click();
-    await browser.keys([Key.Ctrl, "a"]);
-    await browser.keys([Key.Delete]);
-
-    await $passInput.click();
-    await browser.keys([Key.Ctrl, "a"]);
-    await browser.keys([Key.Delete]);
-
+    await username.cleanEl()
+    await password.cleanEl()
     //Hit the "Login" button.
-    await $("input#login-button").click();
+    await login.rootEl.click();
     //Check the error messages: "Username is required".
-    const errorMessage = await $(".error-message-container").getText();
-    expect(errorMessage).toContain("Epic sadface: Username is required");
+    const message = await error.rootEl.getText();
+    expect(message).toContain("Epic sadface: Username is required");
   });
   it("2 Login with credentials by passing Username only", async () => {
-    const $nameInput = await $("input#user-name");
-    const $passInput = await $("input#password");
+
     //Type any credentials in username.
-    await $nameInput.setValue("some text");
+    await username.rootEl.setValue("some text");
     // Enter password.
-    await $passInput.setValue("some pass");
+    await password.rootEl.setValue("some pass");
     //Clear the "Password" input.
-    await $passInput.click();
-    await browser.keys([Key.Ctrl, "a"]);
-    await browser.keys([Key.Delete]);
+    await password.cleanEl()
+
     //Hit the "Login" button.
-    await $("input#login-button").click();
+    await login.rootEl.click();
     // Check the error messages: "Password is required".
-    const errorMessage = await $(".error-message-container").getText();
-    expect(errorMessage).toContain("Password is required");
+   const message = await error.rootEl.getText()
+    expect(message).toContain("Password is required")
+   // expect(errorMessage).toContain("Password is required");
   });
   it("3 Login with right credentials", async () => {
-    const $nameInput = await $("input#user-name");
-    const $passInput = await $("input#password");
+
     //Type credentials in username which are under Accepted username are sections.
-    await $nameInput.setValue("standard_user");
+    await username.rootEl.setValue("standard_user");
     //Enter password as secret sauce.
-    await $passInput.setValue("secret_sauce");
+    await password.rootEl.setValue("secret_sauce");
     //Click on Login
-    await $("input#login-button").click();
+    await login.rootEl.click();
     // validate the title “Swag Labs” in the dashboard.
-    await expect($("div.app_logo")).toHaveText("Swag Labs");
+    await expect(header.rootEl).toHaveText("Swag Labs");
     //Provide parallel execution, add logging for tests and use Data Provider to parametrize tests.
     //Make sure that all tasks are supported by these 3 conditions: UC-1; UC-2; UC-3.
   });
