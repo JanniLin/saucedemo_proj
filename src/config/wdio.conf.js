@@ -35,7 +35,17 @@ export const config = {
 
   framework: "mocha",
 
-  // reporters: ['dot'],
+  reporters: [
+    "spec",
+    [
+      "allure",
+      {
+        outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
+  ],
 
   mochaOpts: {
     ui: "bdd",

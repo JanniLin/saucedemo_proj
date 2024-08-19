@@ -6,6 +6,7 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@wdio/allure-reporter": "^9.0.4",
     "@wdio/cli": "^9.0.4",
     "@wdio/local-runner": "^9.0.4",
     "@wdio/mocha-framework": "^9.0.4",
