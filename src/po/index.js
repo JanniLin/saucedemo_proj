@@ -15,7 +15,7 @@ export default function component(name) {
     password: new PasswordComponent(),
     login: new LoginComponent(),
     error: new ErrorMessageComponent(),
-    header: new HeaderComponent()
+    header: new HeaderComponent(),
   };
   return items[name.toLowerCase()];
 }
