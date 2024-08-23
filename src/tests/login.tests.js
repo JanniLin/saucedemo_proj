@@ -21,7 +21,7 @@ describe("Login test suite", () => {
 
     await component("login").rootEl.click();
     const message = await component("error").rootEl.getText();
-    expect(message).toContain("Password is required");
+   await expect(message).toContain("Epic sadface: Password is required");
   });
   it("3 Login with right credentials", async () => {
     await component("username").rootEl.setValue("standard_user");
