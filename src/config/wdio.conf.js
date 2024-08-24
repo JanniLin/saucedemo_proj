@@ -10,15 +10,17 @@ export const config = {
       maxInstances: 5,
       browserName: "chrome",
       "goog:chromeOptions": {
-        args: ["--headless", "--disable-gpu"],
+        args: ["--headless","--start-maximized"],
       },
+      acceptInsecureCerts: true,
     },
     {
       maxInstances: 5,
       browserName: "MicrosoftEdge",
       "ms:edgeOptions": {
-        args: ["--headless", "--disable-gpu"],
+        args: ["--headless","--start-maximized"],
       },
+      acceptInsecureCerts: true,
     },
   ],
   service: ["chromedriver", "edgedriver"],
