@@ -1,32 +1,43 @@
-import pages from "../po/pages/index.js";
-import component from "../po/index.js";
+import pagesFactory from "../po/pagesFactory.js";
 
 describe("Login test suite", () => {
+  let loginForm;
+  let header;
   beforeEach(async () => {
-    await pages("login").open();
+    const loginPage = pagesFactory("login");
+    loginForm = loginPage.loginForm;
+    await loginPage.open();
   });
-  it("1 Login with empty credentials", async () => {
-    await component("username").rootEl.setValue("some text");
-    await component("password").rootEl.setValue("some pass");
-    await component("username").cleanEl();
-    await component("password").cleanEl();
-    await component("login").rootEl.click();
-    const message = await component("error").rootEl.getText();
+
+  it("UC-1 Test Login form with empty credentials", async () => {
+    await loginForm.usernameField.setValue("lll");
+    await loginForm.passwordField.setValue("lll");
+    await loginForm.clearField(loginForm.usernameField);
+    await loginForm.clearField(loginForm.passwordField);
+
+    await loginForm.loginButton.click();
+    const message = await loginForm.errorMessage.getText();
     expect(message).toContain("Epic sadface: Username is required");
   });
-  it("2 Login with credentials by passing Username only", async () => {
-    await component("username").rootEl.setValue("some text");
-    await component("password").rootEl.setValue("some pass");
-    await component("password").cleanEl();
 
-    await component("login").rootEl.click();
-    const message = await component("error").rootEl.getText();
-   await expect(message).toContain("Epic sadface: Password is required");
+  it("UC-2 Test Login form by entering only the username", async () => {
+    await loginForm.usernameField.setValue("lll");
+    await loginForm.passwordField.setValue("lll");
+    await loginForm.clearField(pagesFactory("login").loginForm.passwordField);
+    //await pagesFactory("login").loginForm.passwordField.click();
+    //await browser.keys([Key.Ctrl, "a"]);
+    //await browser.keys([Key.Delete]);
+    await loginForm.loginButton.click();
+    const message = await loginForm.errorMessage.getText();
+    expect(message).toContain("Epic sadface: Password is required");
   });
-  it("3 Login with right credentials", async () => {
-    await component("username").rootEl.setValue("standard_user");
-    await component("password").rootEl.setValue("secret_sauce");
-    await component("login").rootEl.click();
-    await expect(component("header").rootEl).toHaveText("Swag Labs");
+  before(() => {
+    header = pagesFactory("inventory").header;
+  });
+  it("UC-3 Test Login form with correct credentials", async () => {
+    await loginForm.usernameField.setValue("standard_user");
+    await loginForm.passwordField.setValue("secret_sauce");
+    await loginForm.loginButton.click();
+    await expect(header.headerText).toHaveText("Swag Labs");
   });
 });

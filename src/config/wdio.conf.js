@@ -1,5 +1,6 @@
 export const config = {
   runner: "local",
+  baseUrl: "https://www.saucedemo.com",
 
   specs: ["./../tests/**/*.tests.js"],
 
@@ -10,7 +11,7 @@ export const config = {
       maxInstances: 5,
       browserName: "chrome",
       "goog:chromeOptions": {
-        args: ["--headless","--start-maximized"],
+        args: ["--headless", "--start-maximized"],
       },
       acceptInsecureCerts: true,
     },
@@ -18,7 +19,7 @@ export const config = {
       maxInstances: 5,
       browserName: "MicrosoftEdge",
       "ms:edgeOptions": {
-        args: ["--headless","--start-maximized"],
+        args: ["--headless", "--start-maximized"],
       },
       acceptInsecureCerts: true,
     },
