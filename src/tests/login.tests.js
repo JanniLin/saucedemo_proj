@@ -10,8 +10,8 @@ describe("Login test suite", () => {
   });
 
   it("UC-1 Test Login form with empty credentials", async () => {
-    await loginForm.usernameField.setValue("lll");
-    await loginForm.passwordField.setValue("lll");
+    await loginForm.usernameField.setValue("some_name");
+    await loginForm.passwordField.setValue("some_pass");
     await loginForm.clearField(loginForm.usernameField);
     await loginForm.clearField(loginForm.passwordField);
 
@@ -21,12 +21,9 @@ describe("Login test suite", () => {
   });
 
   it("UC-2 Test Login form by entering only the username", async () => {
-    await loginForm.usernameField.setValue("lll");
-    await loginForm.passwordField.setValue("lll");
-    await loginForm.clearField(pagesFactory("login").loginForm.passwordField);
-    //await pagesFactory("login").loginForm.passwordField.click();
-    //await browser.keys([Key.Ctrl, "a"]);
-    //await browser.keys([Key.Delete]);
+    await loginForm.usernameField.setValue("some_name");
+    await loginForm.passwordField.setValue("some_pass");
+    await loginForm.clearField(loginForm.passwordField);
     await loginForm.loginButton.click();
     const message = await loginForm.errorMessage.getText();
     expect(message).toContain("Epic sadface: Password is required");
