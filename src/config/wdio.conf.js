@@ -1,3 +1,4 @@
+//import "./support/hooks.js";
 export const config = {
   runner: "local",
   baseUrl: "https://www.saucedemo.com",
